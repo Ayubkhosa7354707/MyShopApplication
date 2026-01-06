@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -40,6 +41,7 @@ import com.ayub.khosa.myloginapplication.utils.NetworkHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @JvmOverloads
+
 @Composable
 fun ProductItem(
     viewModel: ProductsViewModel,
@@ -76,7 +78,6 @@ fun ProductItem(
 
 
         ) {
-
 
         Image(
             painter = rememberAsyncImagePainter(myimg.value),

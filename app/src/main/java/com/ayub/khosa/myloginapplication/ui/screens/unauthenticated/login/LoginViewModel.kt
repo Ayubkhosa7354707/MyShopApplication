@@ -7,7 +7,11 @@ import com.ayub.khosa.myloginapplication.room.MainActivityRepository
 import com.ayub.khosa.myloginapplication.utils.NetworkHelper
 import com.ayub.khosa.myloginapplication.utils.PrintLogs
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.WhileSubscribed
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,6 +20,10 @@ class LoginViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) :
     ViewModel() {
+
+
+
+
 
     //    var user = MutableLiveData<USER>()
     private val _uiStatetextValue = MutableStateFlow("")

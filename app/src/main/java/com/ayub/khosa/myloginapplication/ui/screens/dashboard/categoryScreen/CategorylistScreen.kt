@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ayub.khosa.myloginapplication.common.Loading
 import com.ayub.khosa.myloginapplication.common.TitleText
-import com.ayub.khosa.myloginapplication.components.CustomDefaultBtn
+import com.ayub.khosa.myloginapplication.common.CustomDefaultBtn
 import com.ayub.khosa.myloginapplication.model.CATEGORY
 import com.ayub.khosa.myloginapplication.ui.screens.dashboard.productsScreen.rememberMutableStateListOf
 

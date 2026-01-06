@@ -26,11 +26,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ayub.khosa.myloginapplication.api.RetrofitBuilder
 import com.ayub.khosa.myloginapplication.common.TitleText
-import com.ayub.khosa.myloginapplication.components.CustomDefaultBtn
+import com.ayub.khosa.myloginapplication.common.CustomDefaultBtn
 import com.ayub.khosa.myloginapplication.room.MainActivityRepository
 import com.ayub.khosa.myloginapplication.ui.screens.dashboard.categoryScreen.CatagorylistScreen
 import com.ayub.khosa.myloginapplication.ui.screens.dashboard.categoryScreen.CategorysViewModel
-import com.ayub.khosa.myloginapplication.ui.screens.dashboard.productsScreen.PlaylistScreen
+import com.ayub.khosa.myloginapplication.ui.screens.dashboard.productsScreen.ProductlistScreen
 import com.ayub.khosa.myloginapplication.ui.screens.dashboard.productsScreen.ProductsViewModel
 import com.ayub.khosa.myloginapplication.ui.theme.MyLoginApplicationTheme
 import com.ayub.khosa.myloginapplication.utils.NetworkHelper
@@ -124,7 +124,7 @@ fun MYPlayListScreen(modifier: Modifier = Modifier) {
 
         }
         val viewModel: ProductsViewModel = ProductsViewModel(repository, networkHelper)
-        PlaylistScreen(viewModel)
+        ProductlistScreen(viewModel)
     }
 }
 
