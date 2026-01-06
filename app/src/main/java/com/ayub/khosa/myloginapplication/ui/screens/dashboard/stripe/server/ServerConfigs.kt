@@ -12,17 +12,10 @@ import com.stripe.param.CustomerCreateParams
 import com.stripe.param.EphemeralKeyCreateParams
 import com.stripe.param.PaymentIntentCreateParams
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 
 object ServerConfigs {
 
-    /**Set up server configs that returns stripe payment info
-     *
-     * Do not run this code in the main thread. You can use runBlocking but pass the IO dispatcher to
-     * avoid blocking the UI thread which throws an error
-     *
-     * You can return a custom data class of [StripePaymentInfo]
-     * */
+
     fun serverConfig(amount: Long): Map<String, String> = runBlocking(Dispatchers.IO) {
 
         // Pass your api key from: https://dashboard.stripe.com/apikeys
