@@ -26,7 +26,7 @@ object ServerConfigs {
     fun serverConfig(amount: Long): Map<String, String> = runBlocking(Dispatchers.IO) {
 
         // Pass your api key from: https://dashboard.stripe.com/apikeys
-//        Stripe.apiKey = ""
+        Stripe.apiKey =""
         // Create customer object
         val customerParams = CustomerCreateParams.builder().build()
         val customer = create(customerParams)
@@ -52,9 +52,7 @@ object ServerConfigs {
             "paymentIntent" to paymentIntent.clientSecret,
             "ephemeralKey" to ephemeralKey.secret,
             "customer" to customer.id,
-         //   "publishableKey"
-            //
-               )
+         )
 
         stripePaymentInfo
     }
