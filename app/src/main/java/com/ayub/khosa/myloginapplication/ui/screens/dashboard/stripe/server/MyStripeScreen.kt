@@ -47,6 +47,7 @@ fun MyStripeScreen(price: String, modifier: Modifier = Modifier) {
             serverConfig["ephemeralKey"] ?: ""
         )
 
+
         val publishableKey = serverConfig["publishableKey"]
         PaymentConfiguration.init(context, publishableKey ?: "")
     }
