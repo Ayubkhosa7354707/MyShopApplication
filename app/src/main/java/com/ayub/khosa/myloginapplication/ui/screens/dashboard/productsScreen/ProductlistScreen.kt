@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.ayub.khosa.myloginapplication.api.RetrofitBuilder
 import com.ayub.khosa.myloginapplication.common.Loading
 import com.ayub.khosa.myloginapplication.common.TitleText
-import com.ayub.khosa.myloginapplication.components.CustomDefaultBtn
+import com.ayub.khosa.myloginapplication.common.CustomDefaultBtn
 import com.ayub.khosa.myloginapplication.model.PRODUCT
 import com.ayub.khosa.myloginapplication.room.MainActivityRepository
 import com.ayub.khosa.myloginapplication.ui.theme.MyLoginApplicationTheme
@@ -41,7 +41,7 @@ import com.ayub.khosa.myloginapplication.utils.NetworkHelper
 
 
 @Composable
-fun PlaylistScreen(
+fun ProductlistScreen(
     viewModel: ProductsViewModel,
     modifier: Modifier = Modifier
 ) {
@@ -112,8 +112,6 @@ fun PlaylistScreen(
 
 
     }
-
-
 }
 
 @Composable
@@ -175,6 +173,6 @@ fun MYPlayListScreenPreview() {
         }
         val viewModel: ProductsViewModel = ProductsViewModel(repository, networkHelper)
 
-        PlaylistScreen(viewModel)
+        ProductlistScreen(viewModel)
     }
 }

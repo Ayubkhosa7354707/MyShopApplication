@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 class ProductsViewModel @Inject constructor(
     private val repository: MainActivityRepository,
     private val networkHelper: NetworkHelper

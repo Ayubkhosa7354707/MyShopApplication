@@ -1,4 +1,4 @@
-package com.ayub.khosa.myloginapplication.components
+package com.ayub.khosa.myloginapplication.common
 
 
 import androidx.compose.material3.Button

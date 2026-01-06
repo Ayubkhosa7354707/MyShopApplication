@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ayub.khosa.myloginapplication.common.TitleText
-import com.ayub.khosa.myloginapplication.components.CustomDefaultBtn
+import com.ayub.khosa.myloginapplication.common.CustomDefaultBtn
 
 
 @Composable

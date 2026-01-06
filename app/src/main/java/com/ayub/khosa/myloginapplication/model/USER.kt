@@ -1,11 +1,13 @@
 package com.ayub.khosa.myloginapplication.model
 
+import androidx.compose.runtime.Immutable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "users")
+@Immutable
 data class USER(
     @PrimaryKey(autoGenerate = true) var id: Long? = null,
 

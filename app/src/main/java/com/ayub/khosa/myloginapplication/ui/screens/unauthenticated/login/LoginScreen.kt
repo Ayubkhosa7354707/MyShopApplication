@@ -33,9 +33,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ayub.khosa.myloginapplication.common.TitleText
-import com.ayub.khosa.myloginapplication.components.CustomDefaultBtn
+import com.ayub.khosa.myloginapplication.common.CustomDefaultBtn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
 @Composable
 fun LoginScreen(
@@ -48,6 +52,8 @@ fun LoginScreen(
     val textValue by viewModel.textValue.collectAsState()
     val toAuthenticatedRoute by viewModel.toAuthenticatedRoute.collectAsState()
 
+//    LoginViewModel  email -> ayub.khosa@gmail.com
+//    LoginViewModel password ->ayub
     var input_email by rememberSaveable { mutableStateOf("") }
     var input_password by rememberSaveable { mutableStateOf("") }
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
@@ -57,7 +63,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = input_email, singleLine = true,
             onValueChange = { newText -> input_email = newText },
-            label = { Text("Enter your email") },
+            label = { Text("Enter ayub.khosa@gmail.com") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -81,7 +87,7 @@ fun LoginScreen(
                 input_password = newText
             },
             label = {
-                Text(text = "Password")
+                Text(text = "password: ayub")
             },
             trailingIcon = {
                 if (isPasswordVisible) {
@@ -101,7 +107,7 @@ fun LoginScreen(
                     }
                 }
             },
-            placeholder = { Text(text = "Type password here") },
+            placeholder = { Text(text = "password: ayub") },
             shape = RoundedCornerShape(percent = 0),
         )
 

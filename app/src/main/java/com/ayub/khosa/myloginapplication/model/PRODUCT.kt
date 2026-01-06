@@ -4,6 +4,7 @@ package com.ayub.khosa.myloginapplication.model
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -15,6 +16,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "products")
+@Immutable
 data class PRODUCT(
     @PrimaryKey(autoGenerate = true) var id: Long? = null,
     @Bindable
