@@ -52,7 +52,7 @@ object ServerConfigs {
             "paymentIntent" to paymentIntent.clientSecret,
             "ephemeralKey" to ephemeralKey.secret,
             "customer" to customer.id,
-         )
+            "publishableKey" to ""   )
 
         stripePaymentInfo
     }
