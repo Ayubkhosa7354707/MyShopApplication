@@ -10,4 +10,6 @@ sealed class Response<out T> {
     data class Error(
         val message: String
     ) : Response<Nothing>()
+
+    object Idle: Response<Nothing>()
 }

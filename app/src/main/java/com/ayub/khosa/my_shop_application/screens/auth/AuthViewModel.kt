@@ -49,6 +49,7 @@ class AuthViewModel @Inject constructor(
                     is Response.Error -> {
                         toastMessage.value = "SignInWithGoogle Failed"
                     }
+                    is Response.Idle -> {}
                 }
             }
         }

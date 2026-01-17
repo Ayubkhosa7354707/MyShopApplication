@@ -1,6 +1,4 @@
-package com.ayub.khosa.my_shop_application.domain.repository
-
-
+package com.ayub.khosa.my_shop_application.data.auth.repository
 
 import androidx.credentials.Credential
 import com.ayub.khosa.my_shop_application.utils.Response

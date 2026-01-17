@@ -1,7 +1,7 @@
 package com.ayub.khosa.my_shop_application.domain.usecase.authScreen
 
 import androidx.credentials.Credential
-import com.ayub.khosa.my_shop_application.domain.repository.AuthRepository
+import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepository
 
 class OnSignInWithGoogle(
     private val authRepository: AuthRepository

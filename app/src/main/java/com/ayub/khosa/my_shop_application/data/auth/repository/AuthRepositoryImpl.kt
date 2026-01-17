@@ -1,9 +1,9 @@
-package com.ayub.khosa.my_shop_application.data.repository
+package com.ayub.khosa.my_shop_application.data.auth.repository
 
 import androidx.credentials.Credential
 import androidx.credentials.CustomCredential
 import com.ayub.khosa.my_shop_application.domain.model.User
-import com.ayub.khosa.my_shop_application.domain.repository.AuthRepository
+import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepository
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Response
 import com.google.firebase.auth.FirebaseAuth
