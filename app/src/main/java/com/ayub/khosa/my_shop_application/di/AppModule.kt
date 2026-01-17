@@ -1,8 +1,8 @@
 package com.ayub.khosa.my_shop_application.di
 
 import android.content.Context
-import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepositoryImpl
 import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepository
+import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepositoryImpl
 import com.ayub.khosa.my_shop_application.domain.usecase.authScreen.AuthUseCases
 import com.ayub.khosa.my_shop_application.domain.usecase.authScreen.OnSignInWithGoogle
 import com.google.firebase.auth.FirebaseAuth

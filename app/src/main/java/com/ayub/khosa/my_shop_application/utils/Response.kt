@@ -11,5 +11,5 @@ sealed class Response<out T> {
         val message: String
     ) : Response<Nothing>()
 
-    object Idle: Response<Nothing>()
+    object Idle : Response<Nothing>()
 }

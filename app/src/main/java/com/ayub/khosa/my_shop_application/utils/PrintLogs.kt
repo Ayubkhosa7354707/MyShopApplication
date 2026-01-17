@@ -11,7 +11,6 @@ object PrintLogs {
     }
 
 
-
     fun printE(message: String) {
         if (logs_enable) Log.e(TAG, "" + message)
     }

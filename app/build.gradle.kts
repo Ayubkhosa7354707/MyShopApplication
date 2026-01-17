@@ -77,6 +77,10 @@ dependencies {
 // Retrofit + Gson Converter
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.1.0")
+
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
@@ -93,6 +97,11 @@ dependencies {
 
     //    Inject ViewModel objects with Hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.0.0-rc01")
 }
 
 // Allow references to generated code

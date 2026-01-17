@@ -3,8 +3,6 @@ package com.ayub.khosa.my_shop_application.screens.navigation
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -37,7 +35,12 @@ fun BottomNavigationBar(
                 NavigationBarItem(
                     selected = navBackStackEntry?.destination?.route == screen.route,
                     onClick = {
-                        navController.navigate(screen.route)
+                        navController.navigate(screen.route) {
+                            popUpTo(screen.route) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
                     },
                     label = { Text(text = screen.title) },
                     alwaysShowLabel = false,

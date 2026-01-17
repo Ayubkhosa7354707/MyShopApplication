@@ -18,17 +18,17 @@ fun TitleText(
     onTextClick: () -> Unit = {}
 ) {
 
-                TextButton(onClick = {
-                        onTextClick()
-            }) {
-                    Text(
-                        modifier = modifier,
-                        text = text,
-                        textAlign = textAlign,
-                        fontFamily = FontFamily.Serif,
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-            }
+    TextButton(onClick = {
+        onTextClick()
+    }) {
+        Text(
+            modifier = modifier,
+            text = text,
+            textAlign = textAlign,
+            fontFamily = FontFamily.Serif,
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    }
 
 }

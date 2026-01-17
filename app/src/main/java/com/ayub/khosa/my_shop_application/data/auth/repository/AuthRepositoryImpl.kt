@@ -3,9 +3,10 @@ package com.ayub.khosa.my_shop_application.data.auth.repository
 import androidx.credentials.Credential
 import androidx.credentials.CustomCredential
 import com.ayub.khosa.my_shop_application.domain.model.User
-import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepository
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Response
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -16,8 +17,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 
 
 class AuthRepositoryImpl @Inject constructor(
@@ -26,7 +25,6 @@ class AuthRepositoryImpl @Inject constructor(
 
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
-
 
 
     override suspend fun onSignInWithGoogle(credential: Credential): Flow<Response<Boolean>> =
@@ -46,36 +44,32 @@ class AuthRepositoryImpl @Inject constructor(
 
                     firebaseAuth.signInWithCredential(firebaseCredential).await()
                     if (firebaseAuth.currentUser != null) {
-                        val user: User=User()
-                        user.uid= firebaseAuth.currentUser?.uid.toString()
-                        user.email= firebaseAuth.currentUser?.email.toString()
-                        user.displayName= firebaseAuth.currentUser?.displayName.toString()
-                        user.photoUrl= firebaseAuth.currentUser?.photoUrl.toString()
-
-                        PrintLogs.printInfo("User Info : "+user.toString())
-
-
-
-
+                        val user: User = User()
+                        user.uid = firebaseAuth.currentUser?.uid.toString()
+                        user.email = firebaseAuth.currentUser?.email.toString()
+                        user.displayName = firebaseAuth.currentUser?.displayName.toString()
+                        user.photoUrl = firebaseAuth.currentUser?.photoUrl.toString()
+                        PrintLogs.printInfo("User Info : " + user.toString())
                         this@callbackFlow.trySendBlocking(Response.Success(true))
                     } else {
                         this@callbackFlow.trySendBlocking(Response.Success(false))
                     }
                 } else {
-                    this@callbackFlow.trySendBlocking(Response.Success(false))
+                    PrintLogs.printInfo("credential is not CustomCredential")
+                    this@callbackFlow.trySendBlocking(Response.Error("Error -> credential is not CustomCredential"))
                 }
 
             } catch (e: Exception) {
+                e.printStackTrace()
+                PrintLogs.printE("Exception " + e.message)
                 this@callbackFlow.trySendBlocking(Response.Error("Error ->" + e.message))
             }
             awaitClose {
                 channel.close()
                 cancel()
             }
+
         }
-
-
-
 
 
 }

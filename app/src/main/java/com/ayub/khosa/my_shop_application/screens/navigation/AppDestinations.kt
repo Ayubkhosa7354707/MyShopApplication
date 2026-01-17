@@ -1,20 +1,23 @@
 package com.ayub.khosa.my_shop_application.screens.navigation
 
 
+sealed class AppDestinations(
+    var screen_route: String,
+    var arguments: String
+) {
 
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 
-interface AppDestinations {
-    val route: String
+    object Home : AppDestinations("home", "") {
+        val fullRoute = screen_route
+    }
+
+
+    object SignIn : AppDestinations("SignIn", "") {
+        val fullRoute = screen_route + arguments
+    }
+
+    object ProductDetail : AppDestinations("detail", "/{product_clicked.id}") {
+        val fullRoute = screen_route + arguments
+    }
+
 }
-object Home : AppDestinations {
-    override val route = "home"
-}
-
-
-object SignIn : AppDestinations {
-    override val route = "signIn"
-}
-
-

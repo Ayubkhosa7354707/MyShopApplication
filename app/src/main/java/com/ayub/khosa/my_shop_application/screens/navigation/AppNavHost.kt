@@ -8,29 +8,31 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ayub.khosa.my_shop_application.screens.auth.signin.SignInScreen
 import com.ayub.khosa.my_shop_application.screens.dashboard.DashboardScreen
+import com.ayub.khosa.my_shop_application.screens.productdetail.ProductDetailScreen
 
 @Composable
 fun AppNavHost(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
+    LocalContext.current
     NavHost(
         navController = navHostController,
-        startDestination = SignIn.route,
+        startDestination = AppDestinations.SignIn.fullRoute,
         modifier = modifier
     ) {
-        composable(route = SignIn.route) {
+        composable(route = AppDestinations.SignIn.fullRoute) {
             SignInScreen(navHostController)
         }
 
-
-
-        composable(route = Home.route) {
-
-            DashboardScreen( navHostController )
+        composable(route = AppDestinations.Home.fullRoute) {
+            DashboardScreen(navHostController)
         }
 
+        composable(route = AppDestinations.ProductDetail.fullRoute) { backStackEntry ->
+            val product_id = backStackEntry.arguments?.getString("product_clicked.id") as String
+            ProductDetailScreen(product_id, navHostController)
+        }
 
 
     }

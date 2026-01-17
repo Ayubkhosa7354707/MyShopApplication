@@ -9,21 +9,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ayub.khosa.my_shop_application.screens.navigation.AppDestinations
 import com.ayub.khosa.my_shop_application.screens.navigation.AppNavHost
 import com.ayub.khosa.my_shop_application.screens.navigation.BottomNavigationBar
-import com.ayub.khosa.my_shop_application.screens.navigation.SignIn
 
 @Composable
- fun MainScreen (){
+fun MainScreen() {
 
 
     val navHostController = rememberNavController()
     val bottomBarState = rememberSaveable { mutableStateOf(false) }
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     when (navBackStackEntry?.destination?.route) {
-        SignIn.route,    -> bottomBarState.value =
-            false
-
+        AppDestinations.SignIn.screen_route -> bottomBarState.value = false
         else -> bottomBarState.value = true
     }
 

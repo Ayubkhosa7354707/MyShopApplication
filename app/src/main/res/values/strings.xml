@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">My-Shop-Application</string>
 
-    <string name="default_web_client_id"  translatable="false" >606134745983-nm81173tcefb78unvs1s8sld7tv0v2ek.apps.googleusercontent.com</string>
+    <string name="default_web_client_id" translatable="false">606134745983-nm81173tcefb78unvs1s8sld7tv0v2ek.apps.googleusercontent.com</string>
 
 
 </resources>
