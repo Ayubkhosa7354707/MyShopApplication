@@ -23,66 +23,12 @@ class AuthViewModel @Inject constructor(
     var isUserSignInState = mutableStateOf(false)
         private set
 
-    var isUserSignUpState = mutableStateOf(false)
-        private set
+
 
     init {
         PrintLogs.printInfo("AuthViewModel init")
     }
 
-    fun signIn(email: String, password: String) {
-
-        viewModelScope.launch {
-
-
-            authUseCases.signIn(email, password).collect { response ->
-                when (response) {
-                    is Response.Loading -> {
-                        toastMessage.value = ""
-                    }
-
-                    is Response.Success -> {
-                        PrintLogs.printInfo("signIn success " + response.data)
-                        isUserSignInState.value = response.data
-                        toastMessage.value = "Login Successful"
-                        PrintLogs.printInfo("signIn success " + response.data.toString())
-                    }
-
-                    is Response.Error -> {
-                        toastMessage.value = "Login Failed"
-                    }
-                }
-            }
-        }
-
-    }
-
-
-    fun signUp(email: String, password: String) {
-
-
-        viewModelScope.launch {
-
-
-            authUseCases.signUp(email, password).collect { response ->
-                when (response) {
-                    is Response.Loading -> {
-                        toastMessage.value = ""
-                    }
-                    is Response.Success -> {
-                        PrintLogs.printInfo("signIn success " + response.data)
-                        isUserSignUpState.value = response.data
-
-                        toastMessage.value = "Sign up Successful"
-                    }
-                    is Response.Error -> {
-                        toastMessage.value = "Sign up Failed"
-                    }
-                }
-            }
-        }
-
-    }
     fun onSignInWithGoogle(credential: Credential) {
         viewModelScope.launch {
 
