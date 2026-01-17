@@ -5,8 +5,6 @@ import com.ayub.khosa.my_shop_application.data.repository.AuthRepositoryImpl
 import com.ayub.khosa.my_shop_application.domain.repository.AuthRepository
 import com.ayub.khosa.my_shop_application.domain.usecase.authScreen.AuthUseCases
 import com.ayub.khosa.my_shop_application.domain.usecase.authScreen.OnSignInWithGoogle
-import com.ayub.khosa.my_shop_application.domain.usecase.authScreen.SignIn
-import com.ayub.khosa.my_shop_application.domain.usecase.authScreen.SignUp
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -42,9 +40,8 @@ object AppModule {
     @Singleton
     fun providesAuthUseCases(authRepository: AuthRepository) = AuthUseCases(
 
-        signIn = SignIn(authRepository),
+
         onSignInWithGoogle = OnSignInWithGoogle(authRepository),
-        signUp = SignUp(authRepository),
     )
 
 }

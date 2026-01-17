@@ -26,26 +26,7 @@ class AuthRepositoryImpl @Inject constructor(
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
 
-    override suspend fun signIn(email: String, password: String): Flow<Response<Boolean>> =
-        callbackFlow {
-            try {
-                this@callbackFlow.trySendBlocking(Response.Loading)
-                firebaseAuth.signInWithEmailAndPassword(email, password).await()
-                if (firebaseAuth.currentUser != null) {
-                    this@callbackFlow.trySendBlocking(Response.Success(true))
-                } else {
-                    this@callbackFlow.trySendBlocking(Response.Success(false))
-                }
 
-            } catch (e: Exception) {
-                this@callbackFlow.trySendBlocking(Response.Error("Error ->" + e.message))
-            }
-
-            awaitClose {
-                channel.close()
-                cancel()
-            }
-        }
 
     override suspend fun onSignInWithGoogle(credential: Credential): Flow<Response<Boolean>> =
         callbackFlow {
@@ -84,28 +65,6 @@ class AuthRepositoryImpl @Inject constructor(
 
 
 
-    override suspend fun signUp(
-        email: String,
-        password: String
-    ): Flow<Response<Boolean>> = callbackFlow {
-        try {
-            this@callbackFlow.trySendBlocking(Response.Loading)
-
-            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
-                if (it.user != null) {
-                    this@callbackFlow.trySendBlocking(Response.Success(true))
-                }
-            }.addOnFailureListener {
-                this@callbackFlow.trySendBlocking(Response.Error("Error -> " + it.message))
-            }
-        } catch (e: Exception) {
-            this@callbackFlow.trySendBlocking(Response.Error("Error -> " + e.message))
-        }
-        awaitClose {
-            channel.close()
-            cancel()
-        }
-    }
 
 
 }

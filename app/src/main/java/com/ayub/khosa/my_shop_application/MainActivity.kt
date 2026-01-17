@@ -4,15 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ayub.khosa.my_shop_application.screens.auth.signin.SignInScreen
-import com.ayub.khosa.my_shop_application.screens.auth.signup.SignUpScreen
+import com.ayub.khosa.my_shop_application.screens.MainScreen
 import com.ayub.khosa.my_shop_application.ui.theme.MyShopApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,8 +26,7 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                }
 
-                SignInScreen()
-//                SignUpScreen()
+                MainScreen()
             }
         }
     }

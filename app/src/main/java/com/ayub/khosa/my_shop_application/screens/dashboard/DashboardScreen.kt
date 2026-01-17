@@ -1,6 +1,5 @@
-package com.ayub.khosa.my_shop_application.screens.auth.signin
+package com.ayub.khosa.my_shop_application.screens.dashboard
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,52 +7,33 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.ayub.khosa.my_shop_application.R
-import com.ayub.khosa.my_shop_application.screens.auth.AuthViewModel
-import com.ayub.khosa.my_shop_application.screens.auth.signin.google.AuthenticationButton
 import com.ayub.khosa.my_shop_application.screens.common.TitleText
-import com.ayub.khosa.my_shop_application.screens.navigation.Home
-import com.ayub.khosa.my_shop_application.ui.theme.MyShopApplicationTheme
+import com.ayub.khosa.my_shop_application.screens.navigation.SignIn
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Utils
 import com.ayub.khosa.my_shop_application.utils.showToast
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen( navController: NavHostController ,viewModel: AuthViewModel = hiltViewModel(),){
+fun DashboardScreen(navController: NavHostController) {
 
 
-    //Check User Authenticated
-    val isUserAuthenticated = viewModel.isUserSignInState.value
     val context = LocalContext.current
     if (!Utils.isNetworkAvailable(context)) {
         showToast(context, "Network is not available")
     }
 
-    if (isUserAuthenticated) {
-        showToast(context, "Resource.Success Good loged in ")
-        navController.navigate(Home.route) {
-            popUpTo(Home.route) {
-                inclusive = true
-            }
-        }
 
-        PrintLogs.printInfo("Resource.Success Good loged in ")
-        PrintLogs.printInfo(" Go to home Screen ")
-    }
     //  showToast(context, "Resource.Success Not loged in ")
     Scaffold(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -66,8 +46,21 @@ fun SignInScreen( navController: NavHostController ,viewModel: AuthViewModel = h
         ) {
             TitleText(
                 Modifier.padding(top = 1.dp, start = 10.dp, end = 10.dp),
-                "Sign In Screen Firebase"
+
+                "Home   Screen ",
+                onTextClick = {
+                    PrintLogs.printInfo(" Go to SignIn Screen ")
+                    navController.navigate(SignIn.route){
+                        popUpTo(SignIn.route) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
+
+
+
+
 
             Image(
                 painter = painterResource(id = R.drawable.logo),
@@ -77,21 +70,9 @@ fun SignInScreen( navController: NavHostController ,viewModel: AuthViewModel = h
                     .background(Color.Transparent)
             )
 
-            AuthenticationButton(buttonText = "sign_in_with_google") { credential ->
-                viewModel.onSignInWithGoogle(credential)
-            }
 
 
-
+        }
     }
-    }
-}
 
-@SuppressLint("ViewModelConstructorInComposable")
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    MyShopApplicationTheme {
-        SignInScreen(rememberNavController(),)
-    }
 }
