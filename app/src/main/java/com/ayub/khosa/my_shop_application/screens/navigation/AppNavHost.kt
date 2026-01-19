@@ -14,6 +14,7 @@ import com.ayub.khosa.my_shop_application.screens.productdetail.ProductDetailScr
 import com.ayub.khosa.my_shop_application.screens.profilescreen.ProfileScreen
 import com.ayub.khosa.my_shop_application.screens.profilescreen.ProfileViewModel
 import androidx.compose.runtime.collectAsState
+import com.ayub.khosa.my_shop_application.screens.cart_screen.CartScreen
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 
 @Composable
@@ -50,6 +51,10 @@ fun AppNavHost(
         }
         composable(route = AppDestinations.Profile.fullRoute) {
             ProfileScreen(navHostController)
+        }
+
+        composable(route = AppDestinations.Cart.fullRoute) {
+            CartScreen(navHostController)
         }
 
         composable(route = AppDestinations.ProductDetail.fullRoute) { backStackEntry ->

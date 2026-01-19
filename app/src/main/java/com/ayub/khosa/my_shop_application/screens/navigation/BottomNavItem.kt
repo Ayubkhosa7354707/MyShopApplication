@@ -4,8 +4,10 @@ package com.ayub.khosa.my_shop_application.screens.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomNavItem(
@@ -26,6 +28,14 @@ sealed class BottomNavItem(
         selectedIcon = Icons.Filled.Person,
         unselectedIcon = Icons.Outlined.Person,
         route = AppDestinations.Profile.screen_route
+    )
+
+
+    object CartNav: BottomNavItem(
+        title = "Cart",
+        selectedIcon = Icons.Filled.ShoppingCart,
+        unselectedIcon = Icons.Outlined.ShoppingCart,
+        route = AppDestinations.Cart.screen_route
     )
 
 }

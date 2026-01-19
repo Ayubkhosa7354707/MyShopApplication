@@ -1,11 +1,13 @@
 package com.ayub.khosa.my_shop_application.screens.auth
 
 
+import android.content.SharedPreferences
 import androidx.compose.runtime.mutableStateOf
 import androidx.credentials.Credential
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayub.khosa.my_shop_application.domain.usecase.authScreen.AuthUseCases
+import com.ayub.khosa.my_shop_application.utils.Constants.Companion.PREF_FIREBASE_USERID_KEY
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authUseCases: AuthUseCases
+    private val authUseCases: AuthUseCases,
 ) : ViewModel() {
     var toastMessage = mutableStateOf("")
         private set
@@ -60,6 +62,8 @@ class AuthViewModel @Inject constructor(
                             isUserSignInState.value = response.data
                             if (response.data) {
                                 toastMessage.value = "SignInWithGoogle Successful"
+
+
                             } else {
                                 toastMessage.value = "SignInWithGoogle Failed"
                             }

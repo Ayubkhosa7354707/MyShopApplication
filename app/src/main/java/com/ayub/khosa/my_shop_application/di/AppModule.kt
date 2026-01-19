@@ -1,6 +1,7 @@
 package com.ayub.khosa.my_shop_application.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepository
 import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepositoryImpl
 import com.ayub.khosa.my_shop_application.domain.usecase.authScreen.AuthUseCases
@@ -31,8 +32,9 @@ object AppModule {
     @Singleton
     fun providesAuthRepository(
         firebaseAuth: FirebaseAuth,
+        sharedPreferences :SharedPreferences,
     ): AuthRepository = AuthRepositoryImpl(
-        firebaseAuth = firebaseAuth,
+        firebaseAuth = firebaseAuth,sharedPreferences
     )
 
 

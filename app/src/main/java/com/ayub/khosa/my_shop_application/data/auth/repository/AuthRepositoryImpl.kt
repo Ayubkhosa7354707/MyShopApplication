@@ -1,8 +1,10 @@
 package com.ayub.khosa.my_shop_application.data.auth.repository
 
+import android.content.SharedPreferences
 import androidx.credentials.Credential
 import androidx.credentials.CustomCredential
 import com.ayub.khosa.my_shop_application.domain.model.User
+import com.ayub.khosa.my_shop_application.utils.Constants.Companion.PREF_FIREBASE_USERID_KEY
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Response
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -21,6 +23,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
+    private val sharedPreferences: SharedPreferences
 ) : AuthRepository {
 
     override val currentUser: FirebaseUser?
@@ -46,6 +49,8 @@ class AuthRepositoryImpl @Inject constructor(
                     if (firebaseAuth.currentUser != null) {
                         val user: User = User()
                         user.uid = firebaseAuth.currentUser?.uid.toString()
+                        sharedPreferences.edit().putString(PREF_FIREBASE_USERID_KEY, firebaseAuth.currentUser?.uid.toString()).apply()
+
                         user.email = firebaseAuth.currentUser?.email.toString()
                         user.displayName = firebaseAuth.currentUser?.displayName.toString()
                         user.photoUrl = firebaseAuth.currentUser?.photoUrl.toString()

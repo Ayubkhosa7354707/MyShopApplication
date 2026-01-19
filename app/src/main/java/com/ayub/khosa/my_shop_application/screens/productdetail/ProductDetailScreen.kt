@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.ayub.khosa.my_shop_application.data.local.models.UserCart
 import com.ayub.khosa.my_shop_application.data.network.dto.Product
 import com.ayub.khosa.my_shop_application.screens.common.TitleText
 import com.ayub.khosa.my_shop_application.screens.navigation.AppDestinations
@@ -79,8 +82,26 @@ fun ProductDetailScreen(product_id: String, navController: NavHostController) {
             }
         )
         if (Utils.isNetworkAvailable(context)) {
-
+            Button(
+                onClick = {
+                    var userCart: UserCart= UserCart(
+                        productId = product.value.id,
+                        price = product.value.price,
+                        quantity = 2,
+                        title = product.value.name,
+                        image = Constants.BASE_URL +product.value.img,
+                        userId = "",
+                    )
+                    viewModel.addToCart( userCart)
+                },
+                modifier = Modifier.wrapContentSize(),
+                shape = RectangleShape,
+            ) {
+                Text(text = "Add to Cart")
+            }
             MyProductDetailCard(product.value)
+
+
         }
 
     }

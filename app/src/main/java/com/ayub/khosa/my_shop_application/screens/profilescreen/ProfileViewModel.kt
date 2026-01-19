@@ -1,10 +1,12 @@
 package com.ayub.khosa.my_shop_application.screens.profilescreen
 
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayub.khosa.my_shop_application.data.auth.repository.AuthRepository
 import com.ayub.khosa.my_shop_application.domain.model.User
+import com.ayub.khosa.my_shop_application.utils.Constants.Companion.PREF_FIREBASE_USERID_KEY
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel  @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
 
@@ -62,6 +65,7 @@ class ProfileViewModel  @Inject constructor(
                     is Response.Success -> {
                         PrintLogs.printInfo("Success --> " + response.data.toString())
                         user.value =  User()
+                        sharedPreferences.edit().remove(PREF_FIREBASE_USERID_KEY).apply()
                         updateState("Success")
                     }
                     is Response.Error -> {

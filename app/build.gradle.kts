@@ -102,6 +102,13 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
+
+    // Room
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 }
 
 // Allow references to generated code

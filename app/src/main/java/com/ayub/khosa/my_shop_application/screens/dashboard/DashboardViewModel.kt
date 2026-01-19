@@ -1,14 +1,18 @@
 package com.ayub.khosa.my_shop_application.screens.dashboard
 
+import android.content.SharedPreferences
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ayub.khosa.my_shop_application.data.local.models.UserCart
+import com.ayub.khosa.my_shop_application.data.local.repositories.LocalRepository
 import com.ayub.khosa.my_shop_application.data.network.dto.Category
 import com.ayub.khosa.my_shop_application.data.network.dto.Product
 import com.ayub.khosa.my_shop_application.data.network.repository.NetworkRepository
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Response
+import com.ayub.khosa.my_shop_application.utils.Utils.getUserIdFromSharedPref
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val networkRepository: NetworkRepository
+    private val networkRepository: NetworkRepository,
+    private val localRepository: LocalRepository,
+    private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
 
@@ -127,6 +133,13 @@ class DashboardViewModel @Inject constructor(
         }
 
     }
+    fun addToCart(userCart: UserCart) = viewModelScope.launch {
 
+        localRepository.insertUserCartToDb(
+            userCart.copy(
+                userId = getUserIdFromSharedPref(sharedPreferences)
+            )
+        )
+    }
 
 }

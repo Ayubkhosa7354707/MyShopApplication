@@ -22,6 +22,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +44,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.ayub.khosa.my_shop_application.R
+import com.ayub.khosa.my_shop_application.data.local.models.UserCart
 import com.ayub.khosa.my_shop_application.data.network.dto.Category
 import com.ayub.khosa.my_shop_application.data.network.dto.Product
 import com.ayub.khosa.my_shop_application.screens.common.TitleText
@@ -155,7 +158,7 @@ if ( productsList.value.isEmpty() ){
 @Composable
 fun MyProductCard(product: Product, onClick: (Product) -> Unit) {
 
-
+    val viewModel: DashboardViewModel = hiltViewModel()
     Card(
         modifier = Modifier
             .fillMaxSize()
@@ -216,6 +219,24 @@ fun MyProductCard(product: Product, onClick: (Product) -> Unit) {
                         modifier = Modifier.padding(2.dp),
                         color = Color.Black
                     )
+                    Button(
+                        onClick = {
+                            var userCart: UserCart= UserCart(
+                                productId = product.id,
+                                price = product.price,
+                                quantity = 2,
+                                title = product.name,
+                                image = Constants.BASE_URL +product.img,
+                                userId = "",
+                            )
+
+                            viewModel.addToCart( userCart)
+                        },
+                        modifier = Modifier.wrapContentSize(),
+                        shape = RectangleShape,
+                    ) {
+                        Text(text = "Add to Cart")
+                    }
                 }
 
 
