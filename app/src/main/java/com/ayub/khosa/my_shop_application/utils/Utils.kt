@@ -18,7 +18,7 @@ object Utils {
                 networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
-    fun   getUserIdFromSharedPref(sharedPreferences: SharedPreferences): String {
+    fun getUserIdFromSharedPref(sharedPreferences: SharedPreferences): String {
         return sharedPreferences.getString(PREF_FIREBASE_USERID_KEY, "0").toString()
     }
 

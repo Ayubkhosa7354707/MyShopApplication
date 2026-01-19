@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayub.khosa.my_shop_application.data.local.models.UserCart
 import com.ayub.khosa.my_shop_application.data.local.repositories.LocalRepository
-import com.ayub.khosa.my_shop_application.utils.Constants.Companion.PREF_FIREBASE_USERID_KEY
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Response
-import com.ayub.khosa.my_shop_application.utils.Utils
 import com.ayub.khosa.my_shop_application.utils.Utils.getUserIdFromSharedPref
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,10 +27,9 @@ class CartViewModel @Inject constructor(
 
     init {
         PrintLogs.printInfo("CartViewModel init")
-         getCartsByUserId()
+        getCartsByUserId()
 //        getBadgeCount()
     }
-
 
 
     private fun getCartsByUserId() = viewModelScope.launch {

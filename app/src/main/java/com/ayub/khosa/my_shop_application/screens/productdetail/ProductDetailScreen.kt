@@ -84,15 +84,15 @@ fun ProductDetailScreen(product_id: String, navController: NavHostController) {
         if (Utils.isNetworkAvailable(context)) {
             Button(
                 onClick = {
-                    var userCart: UserCart= UserCart(
+                    var userCart: UserCart = UserCart(
                         productId = product.value.id,
                         price = product.value.price,
                         quantity = 2,
                         title = product.value.name,
-                        image = Constants.BASE_URL +product.value.img,
+                        image = Constants.BASE_URL + product.value.img,
                         userId = "",
                     )
-                    viewModel.addToCart( userCart)
+                    viewModel.addToCart(userCart)
                 },
                 modifier = Modifier.wrapContentSize(),
                 shape = RectangleShape,

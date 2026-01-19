@@ -3,20 +3,15 @@ package com.ayub.khosa.my_shop_application.screens.profilescreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,7 +32,7 @@ import com.ayub.khosa.my_shop_application.screens.navigation.AppDestinations
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 
 @Composable
-fun  ProfileScreen( navController: NavHostController)  {
+fun ProfileScreen(navController: NavHostController) {
     val viewModel: ProfileViewModel = hiltViewModel()
 
     val user = viewModel.user.collectAsState()
@@ -80,7 +75,7 @@ fun  ProfileScreen( navController: NavHostController)  {
 
 
 
-        if(user.value.uid+""!="0"){
+        if (user.value.uid + "" != "0") {
             MyUserView(user.value)
         }
         Button(
@@ -98,36 +93,36 @@ fun  ProfileScreen( navController: NavHostController)  {
 
 @Composable
 fun MyUserView(user: User) {
-            Column(
-                modifier = Modifier
-                    .wrapContentSize(),
-                verticalArrangement = Arrangement.Center, // Centers children vertically in the main axis
-                horizontalAlignment = Alignment.CenterHorizontally // Centers children horizontally in the cross axis
+    Column(
+        modifier = Modifier
+            .wrapContentSize(),
+        verticalArrangement = Arrangement.Center, // Centers children vertically in the main axis
+        horizontalAlignment = Alignment.CenterHorizontally // Centers children horizontally in the cross axis
 
-            ) {
-                Image(
-                    painter = rememberAsyncImagePainter(user.photoUrl),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .height(150.dp)
-                        .width(150.dp)
-                        .padding(2.dp)
-                        .border(2.dp, Color.Black)
-                        .clip(RoundedCornerShape(20.dp))
+    ) {
+        Image(
+            painter = rememberAsyncImagePainter(user.photoUrl),
+            contentDescription = "",
+            modifier = Modifier
+                .height(150.dp)
+                .width(150.dp)
+                .padding(2.dp)
+                .border(2.dp, Color.Black)
+                .clip(RoundedCornerShape(20.dp))
 
-                )
-                Text(
-                    text = "Name : " + user.displayName,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Red,
-                    modifier = Modifier.padding(4.dp)
-                )
-                Text(
-                    text = "Email : " + user.email,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Blue,
-                    modifier = Modifier.padding(4.dp)
-                )
+        )
+        Text(
+            text = "Name : " + user.displayName,
+            fontWeight = FontWeight.Bold,
+            color = Color.Red,
+            modifier = Modifier.padding(4.dp)
+        )
+        Text(
+            text = "Email : " + user.email,
+            fontWeight = FontWeight.Bold,
+            color = Color.Blue,
+            modifier = Modifier.padding(4.dp)
+        )
 
     }
 }

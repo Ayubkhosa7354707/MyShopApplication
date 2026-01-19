@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel  @Inject constructor(
+class ProfileViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
@@ -36,14 +36,14 @@ class ProfileViewModel  @Inject constructor(
 
 
     init {
-        user.value =  User()
+        user.value = User()
         PrintLogs.printInfo("ProfileViewModel init")
         updateState("")
         getUser()
     }
 
     private fun getUser() {
-        if(authRepository.currentUser != null) {
+        if (authRepository.currentUser != null) {
             user.value.uid = authRepository.currentUser!!.uid
             user.value.displayName = authRepository.currentUser!!.displayName.toString()
             user.value.email = authRepository.currentUser!!.email.toString()
@@ -52,27 +52,29 @@ class ProfileViewModel  @Inject constructor(
     }
 
 
-
-    fun signOut()  = viewModelScope.launch(Dispatchers.IO) {
+    fun signOut() = viewModelScope.launch(Dispatchers.IO) {
         PrintLogs.printInfo("signOut  ProfileViewModel ")
         try {
-            authRepository.signOut().collect { response->
+            authRepository.signOut().collect { response ->
                 when (response) {
                     is Response.Loading -> {
                         PrintLogs.printInfo("Loading --> ")
                         updateState("Loading")
                     }
+
                     is Response.Success -> {
                         PrintLogs.printInfo("Success --> " + response.data.toString())
-                        user.value =  User()
+                        user.value = User()
                         sharedPreferences.edit().remove(PREF_FIREBASE_USERID_KEY).apply()
                         updateState("Success")
                     }
+
                     is Response.Error -> {
                         PrintLogs.printInfo("Error --> " + response.message)
                         updateState("Error")
                     }
-                    Response.Idle -> { }
+
+                    Response.Idle -> {}
                 }
             }
         } catch (e: Exception) {
@@ -81,10 +83,6 @@ class ProfileViewModel  @Inject constructor(
         }
 
     }
-
-
-
-
 
 
 }

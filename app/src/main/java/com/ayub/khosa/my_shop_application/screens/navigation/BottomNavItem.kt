@@ -31,7 +31,7 @@ sealed class BottomNavItem(
     )
 
 
-    object CartNav: BottomNavItem(
+    object CartNav : BottomNavItem(
         title = "Cart",
         selectedIcon = Icons.Filled.ShoppingCart,
         unselectedIcon = Icons.Outlined.ShoppingCart,

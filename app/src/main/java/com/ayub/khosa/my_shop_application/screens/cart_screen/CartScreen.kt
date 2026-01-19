@@ -25,14 +25,14 @@ import com.ayub.khosa.my_shop_application.utils.Response
 import com.ayub.khosa.my_shop_application.utils.showToast
 
 @Composable
-fun CartScreen (navController: NavHostController, viewModel: CartViewModel = hiltViewModel(),){
+fun CartScreen(navController: NavHostController, viewModel: CartViewModel = hiltViewModel()) {
 
 
     val context = LocalContext.current
     val cartState by viewModel.userCart.collectAsState(initial = Response.Idle)
     val onCartLongClicked = { userCart: UserCart ->
         viewModel.deleteUserCartItem(userCart = userCart)
-        showToast(  context,"Item Deleted")
+        showToast(context, "Item Deleted")
     }
 
 
@@ -59,17 +59,20 @@ fun CartScreen (navController: NavHostController, viewModel: CartViewModel = hil
 
         when (cartState) {
             is Response.Error -> {
-                PrintLogs.printE( " cartState Error ")
+                PrintLogs.printE(" cartState Error ")
             }
+
             Response.Idle -> {
-                PrintLogs.printE( " cartState Idle ")
+                PrintLogs.printE(" cartState Idle ")
             }
+
             Response.Loading -> {
-                PrintLogs.printInfo( " cartState Loading ")
+                PrintLogs.printInfo(" cartState Loading ")
             }
+
             is Response.Success<*> -> {
-                PrintLogs.printInfo( " cartState Success ")
-              val  userCartList = (cartState as Response.Success).data
+                PrintLogs.printInfo(" cartState Success ")
+                val userCartList = (cartState as Response.Success).data
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(userCartList.size) { cart ->
@@ -77,18 +80,18 @@ fun CartScreen (navController: NavHostController, viewModel: CartViewModel = hil
                             userCart = userCartList[cart],
                             onCartLongClicked = onCartLongClicked,
                             onCartItemClicked = {
-                                PrintLogs.printInfo(" Cart  Screen "+it.title+" Clicked ")
-                            } ,
+                                PrintLogs.printInfo(" Cart  Screen " + it.title + " Clicked ")
+                            },
                         )
                     }
                 }
 
-                }
             }
         }
-
-
     }
+
+
+}
 
 
 

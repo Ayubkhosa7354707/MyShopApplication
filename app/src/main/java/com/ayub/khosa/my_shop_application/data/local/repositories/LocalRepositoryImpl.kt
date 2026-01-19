@@ -33,7 +33,6 @@ class LocalRepositoryImpl @Inject constructor(
     }
 
 
-
     override suspend fun getBadgeCountFromDb(userId: String): Int {
         return appDao.getBadgeCount(userId = userId)
     }

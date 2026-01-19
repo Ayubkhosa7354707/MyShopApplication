@@ -68,8 +68,6 @@ fun DashboardScreen(navController: NavHostController) {
     val categoriesList: MutableState<List<Category>> = viewModel.categoriesList
 
 
-    //  showToast(context, "Resource.Success Not loged in ")
-
 
     Column(
         Modifier
@@ -104,52 +102,52 @@ fun DashboardScreen(navController: NavHostController) {
         )
         if (Utils.isNetworkAvailable(context)) {
 
-            if ( categoriesList.value.isEmpty() ){
+            if (categoriesList.value.isEmpty()) {
 
                 CircularProgressIndicator(color = Color.Red)
 
-            }else{
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(1.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 1.dp)
-            ) {
-                items(categoriesList.value) { category ->
-                    MyCategoryCard(category, onClick = { category_clicked ->
-                        viewModel.getProductsListByCategoryNameFromApi(category_clicked.name)
+            } else {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(1.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(horizontal = 1.dp)
+                ) {
+                    items(categoriesList.value) { category ->
+                        MyCategoryCard(category, onClick = { category_clicked ->
+                            viewModel.getProductsListByCategoryNameFromApi(category_clicked.name)
 
-                    })
+                        })
+                    }
+                }
+
+            }
+            if (productsList.value.isEmpty()) {
+
+                CircularProgressIndicator(color = Color.Blue)
+
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .background(Color.LightGray),
+                    contentPadding = PaddingValues(horizontal = 1.dp, vertical = 5.dp)
+                ) {
+                    items(productsList.value) { product ->
+                        MyProductCard(product, onClick = { product_clicked ->
+                            PrintLogs.printInfo(" Go to product Detail Screen ")
+
+                            navController.navigate(AppDestinations.ProductDetail.screen_route + "/${product_clicked.id}") {
+                                popUpTo(AppDestinations.ProductDetail.screen_route) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
+                        })
+                    }
                 }
             }
-
-        }
-if ( productsList.value.isEmpty() ){
-
-    CircularProgressIndicator(color = Color.Blue)
-
-}else{
-    LazyColumn(
-        modifier = Modifier
-            .weight(1f)
-            .background(Color.LightGray),
-        contentPadding = PaddingValues(horizontal = 1.dp, vertical = 5.dp)
-    ) {
-        items(productsList.value) { product ->
-            MyProductCard(product, onClick = { product_clicked ->
-                PrintLogs.printInfo(" Go to product Detail Screen ")
-
-                navController.navigate(AppDestinations.ProductDetail.screen_route + "/${product_clicked.id}") {
-                    popUpTo(AppDestinations.ProductDetail.screen_route) {
-                        inclusive = true
-                    }
-                    launchSingleTop = true
-                }
-            })
-        }
-    }
-}
         }
 
     }
@@ -221,16 +219,16 @@ fun MyProductCard(product: Product, onClick: (Product) -> Unit) {
                     )
                     Button(
                         onClick = {
-                            var userCart: UserCart= UserCart(
+                            var userCart: UserCart = UserCart(
                                 productId = product.id,
                                 price = product.price,
                                 quantity = 2,
                                 title = product.name,
-                                image = Constants.BASE_URL +product.img,
+                                image = Constants.BASE_URL + product.img,
                                 userId = "",
                             )
 
-                            viewModel.addToCart( userCart)
+                            viewModel.addToCart(userCart)
                         },
                         modifier = Modifier.wrapContentSize(),
                         shape = RectangleShape,

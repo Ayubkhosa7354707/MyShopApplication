@@ -1,13 +1,12 @@
 package com.ayub.khosa.my_shop_application.data.local
 
-import androidx.room.OnConflictStrategy
-import com.ayub.khosa.my_shop_application.data.local.models.UserCart
-
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.ayub.khosa.my_shop_application.data.local.models.UserCart
 
 @Dao
 interface AppDao {
@@ -25,11 +24,6 @@ interface AppDao {
 
     @Update
     suspend fun updateUserCartItem(userCart: UserCart)
-
-
-
-
-
 
 
     @Query("SELECT COUNT(*) FROM user_carts WHERE userId = :userId")

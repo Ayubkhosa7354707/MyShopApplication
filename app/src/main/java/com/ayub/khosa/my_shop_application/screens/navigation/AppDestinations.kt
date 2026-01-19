@@ -19,6 +19,7 @@ sealed class AppDestinations(
     object SignIn : AppDestinations("SignIn", "") {
         val fullRoute = screen_route + arguments
     }
+
     object Cart : AppDestinations("Cart", "") {
         val fullRoute = screen_route + arguments
     }

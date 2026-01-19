@@ -28,8 +28,6 @@ class AuthRepositoryImpl @Inject constructor(
 
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
-
-
     override suspend fun onSignInWithGoogle(credential: Credential): Flow<Response<Boolean>> =
         callbackFlow {
             try {
@@ -49,7 +47,10 @@ class AuthRepositoryImpl @Inject constructor(
                     if (firebaseAuth.currentUser != null) {
                         val user: User = User()
                         user.uid = firebaseAuth.currentUser?.uid.toString()
-                        sharedPreferences.edit().putString(PREF_FIREBASE_USERID_KEY, firebaseAuth.currentUser?.uid.toString()).apply()
+                        sharedPreferences.edit().putString(
+                            PREF_FIREBASE_USERID_KEY,
+                            firebaseAuth.currentUser?.uid.toString()
+                        ).apply()
 
                         user.email = firebaseAuth.currentUser?.email.toString()
                         user.displayName = firebaseAuth.currentUser?.displayName.toString()
@@ -75,8 +76,6 @@ class AuthRepositoryImpl @Inject constructor(
             }
 
         }
-
-
 
 
     override suspend fun signOut(): Flow<Response<Boolean>> = callbackFlow {

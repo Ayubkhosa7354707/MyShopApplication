@@ -32,9 +32,9 @@ object AppModule {
     @Singleton
     fun providesAuthRepository(
         firebaseAuth: FirebaseAuth,
-        sharedPreferences :SharedPreferences,
+        sharedPreferences: SharedPreferences,
     ): AuthRepository = AuthRepositoryImpl(
-        firebaseAuth = firebaseAuth,sharedPreferences
+        firebaseAuth = firebaseAuth, sharedPreferences
     )
 
 
