@@ -22,6 +22,7 @@ fun BottomNavigationBar(
 ) {
     val navItemList = listOf(
         BottomNavItem.HomeNav,
+        BottomNavItem.ProfileNav,
     )
 
     AnimatedVisibility(

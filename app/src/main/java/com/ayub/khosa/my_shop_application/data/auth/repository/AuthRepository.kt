@@ -8,5 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface AuthRepository {
     val currentUser: FirebaseUser?
     suspend fun onSignInWithGoogle(credential: Credential): Flow<Response<Boolean>>
+    suspend fun signOut(): Flow<Response<Boolean>>
+
 
 }

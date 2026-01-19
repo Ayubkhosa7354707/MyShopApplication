@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -100,7 +101,11 @@ fun DashboardScreen(navController: NavHostController) {
         )
         if (Utils.isNetworkAvailable(context)) {
 
+            if ( categoriesList.value.isEmpty() ){
 
+                CircularProgressIndicator(color = Color.Red)
+
+            }else{
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -116,26 +121,32 @@ fun DashboardScreen(navController: NavHostController) {
                 }
             }
 
+        }
+if ( productsList.value.isEmpty() ){
 
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .background(Color.LightGray),
-                contentPadding = PaddingValues(horizontal = 1.dp, vertical = 5.dp)
-            ) {
-                items(productsList.value) { product ->
-                    MyProductCard(product, onClick = { product_clicked ->
-                        PrintLogs.printInfo(" Go to product Detail Screen ")
+    CircularProgressIndicator(color = Color.Blue)
 
-                        navController.navigate(AppDestinations.ProductDetail.screen_route + "/${product_clicked.id}") {
-                            popUpTo(AppDestinations.ProductDetail.screen_route) {
-                                inclusive = true
-                            }
-                            launchSingleTop = true
-                        }
-                    })
+}else{
+    LazyColumn(
+        modifier = Modifier
+            .weight(1f)
+            .background(Color.LightGray),
+        contentPadding = PaddingValues(horizontal = 1.dp, vertical = 5.dp)
+    ) {
+        items(productsList.value) { product ->
+            MyProductCard(product, onClick = { product_clicked ->
+                PrintLogs.printInfo(" Go to product Detail Screen ")
+
+                navController.navigate(AppDestinations.ProductDetail.screen_route + "/${product_clicked.id}") {
+                    popUpTo(AppDestinations.ProductDetail.screen_route) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
                 }
-            }
+            })
+        }
+    }
+}
         }
 
     }

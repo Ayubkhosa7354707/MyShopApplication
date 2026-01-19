@@ -11,6 +11,10 @@ sealed class AppDestinations(
         val fullRoute = screen_route
     }
 
+    object Profile : AppDestinations("profile", "") {
+        val fullRoute = screen_route
+    }
+
 
     object SignIn : AppDestinations("SignIn", "") {
         val fullRoute = screen_route + arguments

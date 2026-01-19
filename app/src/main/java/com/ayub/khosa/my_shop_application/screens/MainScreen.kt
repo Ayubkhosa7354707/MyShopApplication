@@ -22,6 +22,7 @@ fun MainScreen() {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     when (navBackStackEntry?.destination?.route) {
         AppDestinations.SignIn.screen_route -> bottomBarState.value = false
+        AppDestinations.ProductDetail.fullRoute -> bottomBarState.value = false
         else -> bottomBarState.value = true
     }
 

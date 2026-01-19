@@ -72,4 +72,24 @@ class AuthRepositoryImpl @Inject constructor(
         }
 
 
+
+
+    override suspend fun signOut(): Flow<Response<Boolean>> = callbackFlow {
+        try {
+            this@callbackFlow.trySendBlocking(Response.Loading)
+            firebaseAuth.signOut().apply {
+                this@callbackFlow.trySendBlocking(Response.Success(true))
+            }
+        } catch (e: Exception) {
+            this@callbackFlow.trySendBlocking(Response.Error("Error ->" + e.message))
+        }
+
+        awaitClose {
+            channel.close()
+            cancel()
+        }
+
+    }
+
+
 }

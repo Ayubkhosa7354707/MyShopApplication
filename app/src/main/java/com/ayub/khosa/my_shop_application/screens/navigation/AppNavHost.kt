@@ -3,22 +3,42 @@ package com.ayub.khosa.my_shop_application.screens.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.ayub.khosa.my_shop_application.screens.auth.AuthViewModel
 import com.ayub.khosa.my_shop_application.screens.auth.signin.SignInScreen
 import com.ayub.khosa.my_shop_application.screens.dashboard.DashboardScreen
 import com.ayub.khosa.my_shop_application.screens.productdetail.ProductDetailScreen
+import com.ayub.khosa.my_shop_application.screens.profilescreen.ProfileScreen
+import com.ayub.khosa.my_shop_application.screens.profilescreen.ProfileViewModel
+import androidx.compose.runtime.collectAsState
+import com.ayub.khosa.my_shop_application.utils.PrintLogs
 
 @Composable
 fun AppNavHost(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
-    LocalContext.current
+    val viewModel: ProfileViewModel = hiltViewModel()
+
+
+    val start = if (viewModel.user.collectAsState().value.uid.toString()!="")
+        {
+        PrintLogs.printInfo("AppNavHost   Home Screen"+viewModel.user.collectAsState().value.uid)
+        AppDestinations.Home.fullRoute }
+        else {
+        PrintLogs.printInfo("AppNavHostGo to Signin Screen"+viewModel.user.collectAsState().value.uid)
+                AppDestinations.SignIn.fullRoute
+            }
+
+
+
+
     NavHost(
         navController = navHostController,
-        startDestination = AppDestinations.SignIn.fullRoute,
+        startDestination = start,
         modifier = modifier
     ) {
         composable(route = AppDestinations.SignIn.fullRoute) {
@@ -27,6 +47,9 @@ fun AppNavHost(
 
         composable(route = AppDestinations.Home.fullRoute) {
             DashboardScreen(navHostController)
+        }
+        composable(route = AppDestinations.Profile.fullRoute) {
+            ProfileScreen(navHostController)
         }
 
         composable(route = AppDestinations.ProductDetail.fullRoute) { backStackEntry ->
