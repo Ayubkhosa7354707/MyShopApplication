@@ -87,7 +87,7 @@ fun ProductDetailScreen(product_id: String, navController: NavHostController) {
                     var userCart: UserCart = UserCart(
                         productId = product.value.id,
                         price = product.value.price,
-                        quantity = 2,
+                        quantity = 1,
                         title = product.value.name,
                         image = Constants.BASE_URL + product.value.img,
                         userId = "",
@@ -107,73 +107,3 @@ fun ProductDetailScreen(product_id: String, navController: NavHostController) {
     }
 }
 
-
-@Composable
-fun MyProductDetailCard(product: Product) {
-
-
-    Card(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 0.dp, top = 2.dp, end = 0.dp, bottom = 2.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White, // Set the background color
-            contentColor = Color.Black // Set the color for content (text/icons) inside the card
-        )
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize(), // The Box fills the entire Card area
-            contentAlignment = Alignment.Center // Centers the content inside the Box
-        ) {
-            Column(
-                modifier = Modifier
-                    .wrapContentSize(),
-                verticalArrangement = Arrangement.Center, // Centers children vertically in the main axis
-                horizontalAlignment = Alignment.CenterHorizontally // Centers children horizontally in the cross axis
-            ) {
-                Text(
-                    text = "Title : " + product.name, textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 20.sp,
-                    color = Color.Blue
-                )
-
-
-                Image(
-                    painter = rememberAsyncImagePainter(Constants.BASE_URL + product.img),
-
-                    contentDescription = "" + product.description,
-                    modifier = Modifier
-                        .height(200.dp)
-                        .width(200.dp)
-                        .padding(2.dp)
-                        .border(2.dp, Color.Black)
-                        .clip(RoundedCornerShape(20.dp))
-
-                )
-
-                Text(
-                    text = "Description : " + product.description,
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(2.dp),
-                    color = Color.Black
-                )
-
-
-                Text(
-                    text = "Price : " + product.price + " PKR",
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(2.dp),
-                    color = Color.Red
-                )
-            }
-
-
-        }
-
-
-    }
-
-}
