@@ -43,7 +43,7 @@ fun CartItem(
             )
             .fillMaxWidth()
             .padding(15.dp),
-        elevation = CardDefaults.cardElevation(
+            elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp
         ),
         shape = RoundedCornerShape(10.dp)
