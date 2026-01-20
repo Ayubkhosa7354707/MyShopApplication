@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -97,18 +98,30 @@ fun MyProductDetailCard(
                         onClick = {
                             addToCart(product)
                         },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.LightGray,           // Sets the button's background color
+                            contentColor = Color.White,           // Sets the text/icon color
+                            disabledContainerColor = Color.Gray,  // Color when the button is disabled
+                            disabledContentColor = Color.DarkGray // Content color when disabled
+                        ),
                         modifier = Modifier.wrapContentSize(),
                     ) {
-                        Text(text = "Add to Cart", color = Color.Blue)
+                        Text(text = "Add to Cart", color = Color.White)
                     }
                 } else {
                     Button(
                         onClick = {
                             removeToCart(product)
                         },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.LightGray,           // Sets the button's background color
+                            contentColor = Color.White,           // Sets the text/icon color
+                            disabledContainerColor = Color.Gray,  // Color when the button is disabled
+                            disabledContentColor = Color.DarkGray // Content color when disabled
+                        ),
                         modifier = Modifier.wrapContentSize(),
                     ) {
-                        Text(text = "Remove to Cart", color = Color.Red)
+                        Text(text = "Remove to Cart", color = Color.Cyan)
                     }
                 }
 

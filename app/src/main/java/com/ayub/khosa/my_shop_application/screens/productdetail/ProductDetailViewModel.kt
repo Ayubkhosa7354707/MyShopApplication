@@ -31,7 +31,6 @@ class ProductDetailViewModel @Inject constructor(
     var is_in_cart: MutableState<Boolean> = mutableStateOf<Boolean>(false)
         private set
 
-
     init {
 
         PrintLogs.printInfo("ProductDetailViewModel init")
@@ -89,10 +88,11 @@ class ProductDetailViewModel @Inject constructor(
                 userId = getUserIdFromSharedPref(sharedPreferences)
             )
         )
+        addedtocat(userCart.productId)
     }
 
     fun deleteUserCartItem(userCart: UserCart) = viewModelScope.launch {
         is_in_cart.value = localRepository.deleteUserCartFromDb(userCart = userCart)
-
+        addedtocat(userCart.productId)
     }
 }

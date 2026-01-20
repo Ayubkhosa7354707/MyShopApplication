@@ -27,10 +27,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.ayub.khosa.my_shop_application.R
+import com.ayub.khosa.my_shop_application.data.local.models.UserCart
 import com.ayub.khosa.my_shop_application.data.network.dto.Category
 import com.ayub.khosa.my_shop_application.data.network.dto.Product
 import com.ayub.khosa.my_shop_application.screens.common.TitleText
 import com.ayub.khosa.my_shop_application.screens.navigation.AppDestinations
+import com.ayub.khosa.my_shop_application.utils.Constants
 import com.ayub.khosa.my_shop_application.utils.PrintLogs
 import com.ayub.khosa.my_shop_application.utils.Utils
 import com.ayub.khosa.my_shop_application.utils.showToast
@@ -46,6 +48,8 @@ fun DashboardScreen(navController: NavHostController) {
     }
 
     val productsList: MutableState<List<Product>> = viewModel.productsList
+
+
     val categoriesList: MutableState<List<Category>> = viewModel.categoriesList
 
 
@@ -114,16 +118,43 @@ fun DashboardScreen(navController: NavHostController) {
                     contentPadding = PaddingValues(horizontal = 1.dp, vertical = 5.dp)
                 ) {
                     items(productsList.value) { product ->
-                        MyProductCard(product, onClick = { product_clicked ->
-                            PrintLogs.printInfo(" Go to product Detail Screen ")
+                        MyProductCard(
+                            product, onClick = { product_clicked ->
+                                PrintLogs.printInfo(" Go to product Detail Screen ")
 
-                            navController.navigate(AppDestinations.ProductDetail.screen_route + "/${product_clicked.id}") {
-                                popUpTo(AppDestinations.ProductDetail.screen_route) {
-                                    inclusive = true
+                                navController.navigate(AppDestinations.ProductDetail.screen_route + "/${product_clicked.id}") {
+                                    popUpTo(AppDestinations.ProductDetail.screen_route) {
+                                        inclusive = true
+                                    }
+                                    launchSingleTop = true
                                 }
-                                launchSingleTop = true
+                            },
+                            is_in_cart = viewModel.live_data_find_in_cart.value[product.id] == true,
+                            addToCart = { product_to_cart ->
+
+                                var userCart: UserCart = UserCart(
+                                    productId = product_to_cart.id,
+                                    price = product_to_cart.price,
+                                    quantity = 1,
+                                    title = product_to_cart.name,
+                                    image = Constants.BASE_URL + product_to_cart.img,
+                                    userId = "",
+                                )
+                                viewModel.addToCart(userCart)
+
+                            },
+                            removeToCart = { product_remove_to_cart ->
+                                var userCart: UserCart = UserCart(
+                                    productId = product_remove_to_cart.id,
+                                    price = product_remove_to_cart.price,
+                                    quantity = 1,
+                                    title = product_remove_to_cart.name,
+                                    image = Constants.BASE_URL + product_remove_to_cart.img,
+                                    userId = "",
+                                )
+                                viewModel.deleteUserCartItem(userCart)
                             }
-                        })
+                        )
                     }
                 }
 

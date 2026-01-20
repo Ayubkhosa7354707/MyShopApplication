@@ -3,6 +3,8 @@ package com.ayub.khosa.my_shop_application.screens.dashboard
 import android.content.SharedPreferences
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ayub.khosa.my_shop_application.data.local.models.UserCart
@@ -36,6 +38,11 @@ class DashboardViewModel @Inject constructor(
         mutableStateOf<List<Category>>(listOf())
         private set
 
+    // 1. Create a mutable map
+    private var mutable_find_in_cart: MutableMap<Int, Boolean> = mutableMapOf(0 to false)
+    val live_data_find_in_cart: LiveData<MutableMap<Int, Boolean>>
+        get() = MutableLiveData(mutable_find_in_cart)
+
 
     init {
         PrintLogs.printInfo("DashboardViewModel init")
@@ -45,7 +52,9 @@ class DashboardViewModel @Inject constructor(
 
     private fun getAllProducts() = viewModelScope.launch(Dispatchers.IO) {
         PrintLogs.printInfo("getAllProducts  DashboardViewModel ")
+
         try {
+            mutable_find_in_cart = mutableMapOf(0 to false)
             productsList.value = listOf()
             networkRepository.getProductsListFromApi()
                 .collect { response ->
@@ -56,14 +65,10 @@ class DashboardViewModel @Inject constructor(
 
                         is Response.Success -> {
                             PrintLogs.printInfo("Success --> " + response.data.toString())
-
-
-
-                            for (product in response.data) {
-
-                                addedtocart(product)
+                            response.data.forEach {
+                                mutable_find_in_cart[it.id] = false
+                                find_in_cart(product_id = it.id)
                             }
-
                             productsList.value = response.data
                         }
 
@@ -84,9 +89,12 @@ class DashboardViewModel @Inject constructor(
 
     fun getProductsListByCategoryNameFromApi(categoryName: String) =
         viewModelScope.launch(Dispatchers.IO) {
+
+
             PrintLogs.printInfo("getAllProducts  DashboardViewModel ")
             try {
                 productsList.value = listOf()
+                mutable_find_in_cart = mutableMapOf(0 to false)
                 networkRepository.getProductsListByCategoryNameFromApi(categoryName)
                     .collect { response ->
                         when (response) {
@@ -96,13 +104,12 @@ class DashboardViewModel @Inject constructor(
 
                             is Response.Success -> {
                                 PrintLogs.printInfo("Success --> " + response.data.toString())
-
-                                for (product in response.data) {
-                                    addedtocart(product)
+                                response.data.forEach {
+                                    mutable_find_in_cart[it.id] = false
+                                    find_in_cart(product_id = it.id)
                                 }
+
                                 productsList.value = response.data
-
-
                             }
 
                             is Response.Error -> {
@@ -115,9 +122,11 @@ class DashboardViewModel @Inject constructor(
                         }
                     }
             } catch (e: Exception) {
+                e.printStackTrace()
                 PrintLogs.printD("Exception  " + e.message)
             }
         }
+
 
     private fun getAllCategories() = viewModelScope.launch(Dispatchers.IO) {
         PrintLogs.printInfo("getAllCategories  DashboardViewModel ")
@@ -147,6 +156,7 @@ class DashboardViewModel @Inject constructor(
 
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             PrintLogs.printD("Exception  " + e.message)
         }
 
@@ -159,29 +169,34 @@ class DashboardViewModel @Inject constructor(
                 userId = getUserIdFromSharedPref(sharedPreferences)
             )
         )
+        mutable_find_in_cart[userCart.productId] = true
 
 
     }
 
-    private fun addedtocart(product: Product) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = localRepository.addedtocat(
-                productId = product.id,
-                userId = getUserIdFromSharedPref(sharedPreferences)
-            )
-            if (result == true) {
-                PrintLogs.printInfo("Added to cart " + product.toString())
-            } else {
-                PrintLogs.printE("Not added to cart " + product.toString())
-            }
 
+    private suspend fun find_in_cart(product_id: Int) {
+
+        PrintLogs.printInfo("viewmodel find_in_cart  " + product_id + " ")
+        try {
+            var result: Boolean = localRepository.addedtocat(
+                product_id,
+                getUserIdFromSharedPref(sharedPreferences)
+            )
+
+            PrintLogs.printInfo("viewmodel find_in_cart  " + product_id + " " + result)
+            mutable_find_in_cart[product_id] = result
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            PrintLogs.printE("Error ->" + e.message)
         }
     }
 
 
     fun deleteUserCartItem(userCart: UserCart) = viewModelScope.launch {
         localRepository.deleteUserCartFromDb(userCart = userCart)
-
+        mutable_find_in_cart[userCart.productId] = false
     }
 
 

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -25,17 +26,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.ayub.khosa.my_shop_application.data.local.models.UserCart
 import com.ayub.khosa.my_shop_application.data.network.dto.Product
 import com.ayub.khosa.my_shop_application.utils.Constants
+import com.ayub.khosa.my_shop_application.utils.PrintLogs
 
 
 @Composable
-fun MyProductCard(product: Product, onClick: (Product) -> Unit) {
+fun MyProductCard(
+    product: Product,
+    is_in_cart: Boolean,
+    onClick: (Product) -> Unit,
+    addToCart: (Product) -> Unit,
+    removeToCart: (Product) -> Unit
+) {
 
-    val viewModel: DashboardViewModel = hiltViewModel()
+//    val viewModel: DashboardViewModel = hiltViewModel()
+
     Card(
         modifier = Modifier
             .wrapContentSize()
@@ -100,34 +107,45 @@ fun MyProductCard(product: Product, onClick: (Product) -> Unit) {
                         color = Color.Black
                     )
 
+                    PrintLogs.printInfo("My Product Card Screen ")
 
 
-
-                    Button(
-                        onClick = {
-                            var userCart: UserCart = UserCart(
-                                productId = product.id,
-                                price = product.price,
-                                quantity = 1,
-                                title = product.name,
-                                image = Constants.BASE_URL + product.img,
-                                userId = "",
+                    PrintLogs.printInfo("My Product Card Screen" + product.id + "  " + is_in_cart.toString())
+                    if (is_in_cart) {
+                        Button(
+                            onClick = {
+                                removeToCart(product)
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.LightGray,           // Sets the button's background color
+                                contentColor = Color.White,           // Sets the text/icon color
+                                disabledContainerColor = Color.Gray,  // Color when the button is disabled
+                                disabledContentColor = Color.DarkGray // Content color when disabled
+                            ),
+                            modifier = Modifier.wrapContentSize(),
+                        ) {
+                            Text(text = "Remove to Cart", color = Color.Red)
+                        }
+                    } else {
+                        Button(
+                            onClick = {
+                                addToCart(product)
+                            },
+                            modifier = Modifier.wrapContentSize(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.LightGray,           // Sets the button's background color
+                                contentColor = Color.White,           // Sets the text/icon color
+                                disabledContainerColor = Color.Gray,  // Color when the button is disabled
+                                disabledContentColor = Color.DarkGray // Content color when disabled
                             )
-
-                            viewModel.addToCart(userCart)
-                        },
-                        modifier = Modifier.wrapContentSize(),
-                    ) {
-                        Text(text = "Add to Cart", color = Color.Blue)
+                        ) {
+                            Text(text = "Add to Cart", color = Color.White)
+                        }
                     }
 
 
                 }
-
-
             }
-
         }
     }
-
 }

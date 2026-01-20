@@ -57,7 +57,6 @@ fun ProductDetailScreen(product_id: String, navController: NavHostController) {
                 navController.navigate(AppDestinations.Home.screen_route) {
                     popUpTo(AppDestinations.Home.screen_route) {
                         inclusive = true
-
                     }
                     launchSingleTop = true
                 }
