@@ -31,9 +31,6 @@ fun AppNavHost(
         AppDestinations.SignIn.fullRoute
     }
 
-
-
-
     NavHost(
         navController = navHostController,
         startDestination = start,

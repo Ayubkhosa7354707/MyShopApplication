@@ -28,4 +28,5 @@ interface AppDao {
 
     @Query("SELECT COUNT(*) FROM user_carts WHERE userId = :userId")
     suspend fun getBadgeCount(userId: String): Int
+
 }

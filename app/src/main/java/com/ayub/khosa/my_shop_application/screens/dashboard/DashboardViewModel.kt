@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val networkRepository: NetworkRepository,
@@ -29,15 +30,16 @@ class DashboardViewModel @Inject constructor(
     var productsList: MutableState<List<Product>> =
         mutableStateOf<List<Product>>(listOf())
         private set
+
+
     var categoriesList: MutableState<List<Category>> =
         mutableStateOf<List<Category>>(listOf())
         private set
 
 
     init {
-
         PrintLogs.printInfo("DashboardViewModel init")
-        getAllProducts()
+
         getAllCategories()
     }
 
@@ -54,6 +56,14 @@ class DashboardViewModel @Inject constructor(
 
                         is Response.Success -> {
                             PrintLogs.printInfo("Success --> " + response.data.toString())
+
+
+
+                            for (product in response.data) {
+
+                                addedtocart(product)
+                            }
+
                             productsList.value = response.data
                         }
 
@@ -86,7 +96,13 @@ class DashboardViewModel @Inject constructor(
 
                             is Response.Success -> {
                                 PrintLogs.printInfo("Success --> " + response.data.toString())
+
+                                for (product in response.data) {
+                                    addedtocart(product)
+                                }
                                 productsList.value = response.data
+
+
                             }
 
                             is Response.Error -> {
@@ -115,6 +131,8 @@ class DashboardViewModel @Inject constructor(
                     is Response.Success -> {
                         PrintLogs.printInfo("Success --> " + response.data.toString())
                         categoriesList.value = response.data
+
+                        getProductsListByCategoryNameFromApi(categoriesList.value[0].name)
                     }
 
                     is Response.Error -> {
@@ -141,6 +159,30 @@ class DashboardViewModel @Inject constructor(
                 userId = getUserIdFromSharedPref(sharedPreferences)
             )
         )
+
+
     }
+
+    private fun addedtocart(product: Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = localRepository.addedtocat(
+                productId = product.id,
+                userId = getUserIdFromSharedPref(sharedPreferences)
+            )
+            if (result == true) {
+                PrintLogs.printInfo("Added to cart " + product.toString())
+            } else {
+                PrintLogs.printE("Not added to cart " + product.toString())
+            }
+
+        }
+    }
+
+
+    fun deleteUserCartItem(userCart: UserCart) = viewModelScope.launch {
+        localRepository.deleteUserCartFromDb(userCart = userCart)
+
+    }
+
 
 }

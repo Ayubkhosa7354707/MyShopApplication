@@ -24,8 +24,14 @@ class LocalRepositoryImpl @Inject constructor(
         appDao.insertUserCart(userCart = userCart)
     }
 
-    override suspend fun deleteUserCartFromDb(userCart: UserCart) {
+    override suspend fun deleteUserCartFromDb(userCart: UserCart): Boolean {
         appDao.deleteUserCartItem(userCart = userCart)
+
+
+        appDao.deleteUserCartItem(userCart = userCart)
+
+        return true
+
     }
 
     override suspend fun updateUserCartFromDb(userCart: UserCart) {
@@ -35,6 +41,21 @@ class LocalRepositoryImpl @Inject constructor(
 
     override suspend fun getBadgeCountFromDb(userId: String): Int {
         return appDao.getBadgeCount(userId = userId)
+    }
+
+    override suspend fun addedtocat(
+        productId: Int,
+        userId: String
+    ): Boolean {
+        val result = appDao.getCartByUserId(userId = userId)
+
+        result.forEach { userCart ->
+            if (userCart.productId == productId) {
+                return true
+            }
+        }
+        return false
+
     }
 
 

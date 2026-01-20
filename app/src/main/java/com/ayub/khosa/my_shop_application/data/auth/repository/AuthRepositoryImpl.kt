@@ -28,6 +28,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
+
     override suspend fun onSignInWithGoogle(credential: Credential): Flow<Response<Boolean>> =
         callbackFlow {
             try {

@@ -28,8 +28,14 @@ class ProductDetailViewModel @Inject constructor(
     var product: MutableState<Product> = mutableStateOf<Product>(Product())
         private set
 
+    var is_in_cart: MutableState<Boolean> = mutableStateOf<Boolean>(false)
+        private set
+
+
     init {
+
         PrintLogs.printInfo("ProductDetailViewModel init")
+        is_in_cart = mutableStateOf<Boolean>(false)
     }
 
 
@@ -46,6 +52,10 @@ class ProductDetailViewModel @Inject constructor(
                         is Response.Success -> {
                             PrintLogs.printInfo("Success --> " + response.data.toString())
                             product.value = response.data
+
+                            addedtocat(response.data.id)
+
+
                         }
 
                         is Response.Error -> {
@@ -62,6 +72,15 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
+    private fun addedtocat(product_id: Int) = viewModelScope.launch {
+
+        is_in_cart.value = localRepository.addedtocat(
+            product_id,
+            userId = getUserIdFromSharedPref(sharedPreferences)
+        )
+
+    }
+
 
     fun addToCart(userCart: UserCart) = viewModelScope.launch {
 
@@ -70,5 +89,10 @@ class ProductDetailViewModel @Inject constructor(
                 userId = getUserIdFromSharedPref(sharedPreferences)
             )
         )
+    }
+
+    fun deleteUserCartItem(userCart: UserCart) = viewModelScope.launch {
+        is_in_cart.value = localRepository.deleteUserCartFromDb(userCart = userCart)
+
     }
 }

@@ -9,9 +9,10 @@ interface LocalRepository {
 
     suspend fun insertUserCartToDb(userCart: UserCart)
 
-    suspend fun deleteUserCartFromDb(userCart: UserCart)
+    suspend fun deleteUserCartFromDb(userCart: UserCart): Boolean
 
     suspend fun updateUserCartFromDb(userCart: UserCart)
 
     suspend fun getBadgeCountFromDb(userId: String): Int
+    suspend fun addedtocat(productId: Int, userId: String): Boolean
 }
